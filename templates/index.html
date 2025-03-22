@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matched Clients</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <h1>Matched Clients</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>CEDULA</th>
+                <th>NOMBRE CLIENTE</th>
+                <th>DATAID</th>
+                <th>NOMBRE UN</th>
+                <th>COINCIDENCIAS</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for client in matched_clients %}
+            <tr>
+                <td>{{ client['CEDULA'] }}</td>
+                <td>{{ client['NOMBRE_CLIENTE'] }}</td>
+                <td>{{ client['DATAID'] }}</td>
+                <td>{{ client['NOMBRE_UN'] }}</td>
+                <td>{{ client['COINCIDENCIAS'] | join(', ') }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
