@@ -8,7 +8,6 @@ from variables import client_csv_file_path, un_sc_url, number_of_matches
 # Function to load data when the CSV file is selected
 def load_data_from_csv(file_path):
     try:
-        # Call the validate_client_list function to get matched clients
         matched_clients = validate_client_list(file_path, un_sc_url, number_of_matches)
 
         # Check if there is any data to display
@@ -37,7 +36,6 @@ def load_data_from_csv(file_path):
 # Function to save data as CSV
 def save_as_csv():
     try:
-        # Collect the data from the treeview
         matched_clients = [tree.item(row)['values'] for row in tree.get_children()]
 
         if not matched_clients:
@@ -77,7 +75,7 @@ def load_data():
 # Create the main window
 root = tk.Tk()
 root.title("Client Data Viewer")
-root.geometry("800x400")  # Set the window size
+root.geometry("1200x400")  # Set the window size
 
 # Frame to hold the Treeview and Scrollbars
 frame = tk.Frame(root)
@@ -91,16 +89,18 @@ tree = ttk.Treeview(frame, columns=columns, show='headings')
 for col in columns:
     tree.heading(col, text=col)
 
-# Create the vertical scrollbar
+# Create the vertical scrollbar (vsb)
 vsb = tk.Scrollbar(frame, orient="vertical", command=tree.yview)
 vsb.pack(side='right', fill='y')
 
-# Create the horizontal scrollbar
+# Create the horizontal scrollbar (hsb)
 hsb = tk.Scrollbar(frame, orient="horizontal", command=tree.xview)
 hsb.pack(side='bottom', fill='x')
 
 # Attach scrollbars to the treeview
 tree.configure(yscrollcommand=vsb.set, xscrollcommand=hsb.set)
+
+# Pack the Treeview inside the frame, making sure it can expand
 tree.pack(fill='both', expand=True)
 
 # Frame to hold buttons horizontally
