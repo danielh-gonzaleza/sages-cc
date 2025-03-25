@@ -1,15 +1,29 @@
 import requests
 import xml.etree.ElementTree as ET
 import csv
+import chardet
 
 from variables import blacklisted_prepositions
 
 
+
+
+def detect_encoding(file_path):
+    with open(file_path, 'rb') as f:
+        raw_data = f.read(10000)  # Read a small part of the file
+        result = chardet.detect(raw_data)
+    return result['encoding']
+
+
+def detect_delimiter(file_path, encoding):
+    with open(file_path, 'r', encoding=encoding) as f:
+        sample = f.read(1024)  # Read a sample to detect the delimiter
+        dialect = csv.Sniffer().sniff(sample)
+        return dialect.delimiter
+
+
 def remove_blacklist_prepositions(names_list: list) -> list:
     return list(set(names_list) - set(blacklisted_prepositions))
-
-def remove_duplicates(data: list) -> list:
-    pass
 
 
 def load_un_sanction_names_xml(url: str) -> list:
@@ -50,8 +64,12 @@ def load_clients_csv(csv_file_path: str) -> list:
     client_list = []
     duplicate_control = []
 
-    with open(csv_file_path, newline='', encoding='utf-8') as csvfile:
-        reader = csv.DictReader(csvfile)
+    encoding = detect_encoding(csv_file_path)
+
+    delimiter = detect_delimiter(csv_file_path, encoding)
+
+    with open(csv_file_path, newline='', encoding=encoding) as csvfile:
+        reader = csv.DictReader(csvfile, delimiter=delimiter)
 
         for row in reader:
             document_id = row["CEDULA"].strip()
