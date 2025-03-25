@@ -108,11 +108,11 @@ button_frame = tk.Frame(root)
 button_frame.pack(pady=10)
 
 # Create the "Load CSV" button (on the left)
-load_csv_button = tk.Button(button_frame, text="Load CSV", command=load_data)
+load_csv_button = tk.Button(button_frame, text="Cargar clientes CSV", command=load_data)
 load_csv_button.pack(side='left', padx=5)
 
 # Create the "Save as CSV" button (on the right)
-save_csv_button = tk.Button(button_frame, text="Save as CSV", command=save_as_csv)
+save_csv_button = tk.Button(button_frame, text="Salvar coincidencias en CSV", command=save_as_csv)
 save_csv_button.pack(side='right', padx=5)
 
 # Run the Tkinter event loop
